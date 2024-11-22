@@ -147,7 +147,7 @@ def add_article_function(req: func.HttpRequest) -> func.HttpResponse:
 
         logging.info("Sélection d'un embedding aléatoire.")
         random_embedding = embeddings[random.randint(0, len(embeddings) - 1)]
-        
+
         # Créer un nouvel article
         new_article = pd.DataFrame({
             'article_id': [new_article_id],
@@ -164,9 +164,14 @@ def add_article_function(req: func.HttpRequest) -> func.HttpResponse:
         embeddings = np.vstack([embeddings, random_embedding])
 
         logging.info("Sauvegarde des modifications.")
-        articles_df.to_csv("articles_metadata.csv", index=False)
-        with open("articles_embeddings.pickle", "wb") as f:
-            pickle.dump(embeddings, f)
+        try:
+            # Sauvegarder le DataFrame mis à jour dans Azure Blob Storage
+            save_articles_df(articles_df)
+            # Sauvegarder les embeddings mis à jour dans Azure Blob Storage
+            save_embeddings(embeddings)
+        except Exception as e:
+            logging.error(f"Erreur lors de la sauvegarde des données dans Azure Blob Storage : {str(e)}")
+            return func.HttpResponse(f"An error occurred while saving data: {str(e)}", status_code=500)
 
         response = {
             "message": "Article added successfully.",
@@ -183,5 +188,3 @@ def add_article_function(req: func.HttpRequest) -> func.HttpResponse:
     except Exception as e:
         logging.error(f"Une erreur est survenue : {str(e)}")
         return func.HttpResponse(f"An error occurred: {str(e)}", status_code=500)
-    
-    
