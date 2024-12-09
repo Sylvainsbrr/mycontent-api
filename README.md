@@ -16,7 +16,7 @@ Bienvenue dans le projet **My Content**, une application simple qui recommande d
 
 Voici l'architecture actuelle du projet :
 
-![Architecture Déployée](images/architecture_deployee.png)
+![Architecture Déployée](simpledia.png)
 
 - **Azure Functions :** Gestion des requêtes de recommandation.
 - **Azure Blob Storage :** Stockage des données des articles et des modèles.
@@ -29,9 +29,9 @@ Voici l'architecture actuelle du projet :
 ### Interface Utilisateur
 Une interface utilisateur simple et intuitive :
 
-![Interface Utilisateur](images/interface_utilisateur.png)
+![Interface Utilisateur](interface_utilisateur.png)
 
 ### Recommandations
 Une sélection de 5 articles personnalisés pour un utilisateur :
 
-![Exemple Recommandations](images/exemple_recommandations.png)
+![Exemple Recommandations](exemple_recommandations.png)
